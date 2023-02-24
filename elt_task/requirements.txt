@@ -1,0 +1,8 @@
+gdown==4.5.4
+pandas==1.5.1
+pyTelegramBotAPI==4.10.0
+PyYAML==6.0
+SQLAlchemy==1.4.39
+openpyxl
+psycopg2
+xlsxwriter
