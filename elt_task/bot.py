@@ -1,26 +1,26 @@
-import logging.config
+import os
+import sys
+import argparse
 
+import logging.config
 from sqlalchemy import create_engine
 import telebot
-import argparse
 import pandas as pd
-import os
 
 from config.logger_config import config
-from utils.utils import get_config, get_db_params, check_db_connection
+from utils.utils import get_db_params, check_db_connection
 
 logging.config.dictConfig(config)
 logger = logging.getLogger('bot')
 
 if 'TBOT_TOKEN' not in os.environ:
     logger.critical("Can't find env TBOT_TOKEN, exit")
-    print("Can't find tbot_token in env")
-    exit(-1)
+    sys.exit(-1)
 
 bot = telebot.TeleBot(os.environ['TBOT_TOKEN'])
-logger.info(f"Bot loaded, token = {os.environ['TBOT_TOKEN']}")
-is_preprocessed = False
-filename = 'output.xlsx'
+logger.info("Bot loaded, token = %s", os.environ['TBOT_TOKEN'])
+IS_PREPROCESSED = False
+FILENAME = 'output.xlsx'
 
 
 def create_document(filename: str = 'output.xlsx'):
@@ -56,22 +56,22 @@ def create_document(filename: str = 'output.xlsx'):
 def send_welcome(message):
     bot.reply_to(message, 'Hi there, I am ReportBot. Please send "/report"'
                           ' command')
-    logger.info(f'Sending hello message, chat id - {message.chat.id}')
+    logger.info('Sending hello message, chat id - %i', message.chat.id)
 
 
 @bot.message_handler(commands=['report'])
 def get_text_messages(message):
-    if not is_preprocessed or not os.path.exists(filename) or True:
-        create_document(filename)
-    with open(filename, 'rb') as f:
+    if not IS_PREPROCESSED or not os.path.exists(FILENAME):
+        create_document(FILENAME)
+    with open(FILENAME, 'rb') as f:
         bot.send_document(message.chat.id, f)
-    logger.info(f'Sending file message, chat id - {message.chat.id}')
+    logger.info('Sending file message, chat id - %i',message.chat.id)
 
 
 @bot.message_handler(content_types='text')
 def message_reply(message):
     bot.send_message(message.chat.id, "Please, use /report command")
-    logger.info(f'Wrong message, chat id - {message.chat.id}')
+    logger.info('Wrong message, chat id - %i', message.chat.id)
 
 
 if __name__ == '__main__':
@@ -81,5 +81,5 @@ if __name__ == '__main__':
     parser.add_argument("--fl", help='Filename', default='output.xlsx')
 
     args = parser.parse_args()
-    is_preprocessed, filename = args.pr, args.fl
+    IS_PREPROCESSED, FILENAME = args.pr, args.fl
     bot.infinity_polling()

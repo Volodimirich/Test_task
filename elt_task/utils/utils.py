@@ -1,5 +1,6 @@
 import logging
 import os
+import sys
 
 from yaml import safe_load
 import sqlalchemy
@@ -30,4 +31,4 @@ def check_db_connection(engine: sqlalchemy.engine.base.Engine,
         logger.info('Database connected')
     except SQLAlchemyError as err:
         logger.critical(f'Error in database connection - {err.__cause__}')
-        exit(-1)
+        sys.exit(-1)

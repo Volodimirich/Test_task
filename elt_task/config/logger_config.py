@@ -9,14 +9,14 @@ config = {
         'preprocessing': {
             'class': 'logging.FileHandler',
             'level': 'INFO',
-            'filename': 'logs.log',
+            'filename': 'logs/logs.log',
             'formatter': 'file',
 
         },
         'bot': {
             'class': 'logging.FileHandler',
             'level': 'INFO',
-            'filename': 'logs.log',
+            'filename': 'logs/logs.log',
             'formatter': 'file',
 
         }

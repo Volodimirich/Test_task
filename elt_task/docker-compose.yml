@@ -24,6 +24,9 @@ services:
       - POSTGRES_NAME
       - TBOT_TOKEN
       - GDRIVE_LINK
+    volumes:
+      - ./logs/:/logs
+
 
 
 
