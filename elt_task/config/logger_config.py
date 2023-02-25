@@ -6,18 +6,30 @@ config = {
         }
     },
     'handlers': {
-        'file_handler': {
+        'preprocessing': {
             'class': 'logging.FileHandler',
             'level': 'INFO',
-            'filename': 'preprocessing.log',
+            'filename': 'logs.log',
+            'formatter': 'file',
+
+        },
+        'bot': {
+            'class': 'logging.FileHandler',
+            'level': 'INFO',
+            'filename': 'logs.log',
             'formatter': 'file',
 
         }
+
     },
     'loggers': {
-        'file_logger': {
+        'preprocessing': {
             'level': 'INFO',
-            'handlers': ['file_handler'],
+            'handlers': ['preprocessing'],
+        },
+        'bot': {
+            'level': 'INFO',
+            'handlers': ['bot'],
         }
     },
 }

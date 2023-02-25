@@ -4,19 +4,26 @@ services:
     image: postgres:14.1-alpine
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_NAME
     ports:
       - '5432:5432'
     volumes:
       - db:/var/lib/postgresql/data
 
   python_script:
-    build: test
+    image: volodimirich1/python_script
     depends_on:
       - db
     links:
       - db
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_NAME
+      - TBOT_TOKEN
+      - GDRIVE_LINK
 
 
 
