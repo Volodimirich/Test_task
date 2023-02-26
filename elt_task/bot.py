@@ -65,7 +65,7 @@ def get_text_messages(message):
         create_document(FILENAME)
     with open(FILENAME, 'rb') as f:
         bot.send_document(message.chat.id, f)
-    logger.info('Sending file message, chat id - %i',message.chat.id)
+    logger.info('Sending file message, chat id - %i', message.chat.id)
 
 
 @bot.message_handler(content_types='text')

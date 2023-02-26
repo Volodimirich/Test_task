@@ -17,7 +17,8 @@ logger = logging.getLogger('preprocessing')
 
 def download_data(output: str) -> None:
     if 'GDRIVE_LINK' not in os.environ:
-        print('Gdrive link not in env')
+        logger.critical('Gdrive link not in env')
+        sys.exit(-1)
 
     Path(output).parent.mkdir(parents=True, exist_ok=True)
     gdown.download(os.environ['GDRIVE_LINK'], output, quiet=False)
